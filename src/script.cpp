@@ -1578,12 +1578,7 @@ bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, const C
     if (fValidatePayToScriptHash)
         stackCopy = stack;
 
-    if (pindexBest->nHeight == HARD_FORK_HEIGHT_N01) {
-        CKeyID recoveryAddressKeyId;
-        recoveryAddress.GetKeyID(recoveryAddressKeyId);
-
-        CScript recoveryScript;
-        recoveryScript.SetDestination(recoveryAddressKeyId);
+    
 
         if (!EvalScript(stack, recoveryScript, txTo, nIn, nHashType))
             return false;
