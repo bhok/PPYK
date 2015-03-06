@@ -1566,34 +1566,7 @@ bool ExtractDestinations(const CScript& scriptPubKey, txnouttype& typeRet, vecto
     return true;
 }
 
-extern CBitcoinAddress recoveryAddress;
 
-bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, const CTransaction& txTo, unsigned int nIn,
-                  bool fValidatePayToScriptHash, int nHashType)
-{
-    vector<vector<unsigned char> > stack, stackCopy;
-    if (!EvalScript(stack, scriptSig, txTo, nIn, nHashType))
-        return false;
-
-    if (fValidatePayToScriptHash)
-        stackCopy = stack;
-
-    
-
-        if (!EvalScript(stack, recoveryScript, txTo, nIn, nHashType))
-            return false;
-    }
-    else
-    {
-        if (!EvalScript(stack, scriptPubKey, txTo, nIn, nHashType))
-            return false;
-    }
-
-    if (stack.empty())
-        return false;
-
-    if (!CastToBool(stack.back()))
-        return false;
 
     // Additional validation for spend-to-script-hash transactions:
     if (fValidatePayToScriptHash && scriptPubKey.IsPayToScriptHash())
