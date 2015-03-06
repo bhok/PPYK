@@ -45,14 +45,14 @@ static CBigNum bnProofOfStakeHardLimit(~uint256(0) >> 30); // disabled temporari
 static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 20);
 static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 
-unsigned int nStakeMinAge = 60 * 60 * 24 * 21; // minimum age for coin age (21 days)
-unsigned int nStakeMaxAge = 60 * 60 * 24 * 90; // stake age of full weight (90 days)
-unsigned int nStakeTargetSpacing = 10 * 60; // 10 minute block spacing
-unsigned int nProofOfWorkTargetSpacing = 5 * 60; // 5 minutes PoW block spacing
+unsigned int nStakeMinAge = 60 * 60 * 4; // minimum age for coin age (4 hours)
+unsigned int nStakeMaxAge = 60 * 60 * 24 * 2; // stake age of full weight (2 days)
+unsigned int nStakeTargetSpacing = 5 * 60; // 5 minute block spacing
+unsigned int nProofOfWorkTargetSpacing = 2 * 60; // 2 minutes PoW block spacing
 
 
-int64 nChainStartTime = 1389138959;
-int nCoinbaseMaturity = 5;
+int64 nChainStartTime = 1425604161;
+int nCoinbaseMaturity = 24;
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
 CBigNum bnBestChainTrust = 0;
@@ -74,7 +74,7 @@ map<uint256, map<uint256, CDataStream*> > mapOrphanTransactionsByPrev;
 // Constant stuff for coinbase transactions we create:
 CScript COINBASE_FLAGS;
 
-const string strMessageMagic = "FairCoin Signed Message:\n";
+const string strMessageMagic = "PPYK Signed Message:\n";
 
 double dHashesPerSec;
 int64 nHPSTimerStart;
@@ -952,9 +952,9 @@ int64 GetProofOfWorkReward(int nHeight)
 		else if (nHeight == 1)
 			return 50 * COIN;
 		else if (nHeight == 2)
-			return 499950 * COIN;
+			return 4999 * COIN;
 		else if (nHeight < 102)
-			return 500000 * COIN;
+			return 5000 * COIN;
 
     	// never reached
 		return 0.1 * CENT;
@@ -2714,14 +2714,14 @@ int LoadBlockIndex(bool fAllowNew)
 {
     if (fTestNet)
     {
-        pchMessageStart[0] = 0xcd;
-        pchMessageStart[1] = 0xf2;
+        pchMessageStart[0] = 0xca;
+        pchMessageStart[1] = 0xf1;
         pchMessageStart[2] = 0xc0;
-        pchMessageStart[3] = 0xef;
+        pchMessageStart[3] = 0xc0;
 
         bnProofOfStakeLimit = bnProofOfStakeLimitTestNet; // 0x00000fff PoS base target is fixed in testnet
         hashGenesisBlock = hashGenesisBlockTestNet;
-        nStakeMinAge = 24 * 60 * 60; // test net min age is 24 hours
+        nStakeMinAge = 1 * 60 * 60; // test net min age is 1 hour
         nModifierInterval = 20 * 60; // test modifier interval is 20 minutes
         nCoinbaseMaturity = 5; // test maturity is 5 blocks
         nStakeTargetSpacing = 10 * 60; // test block spacing is 3 minutes
@@ -2741,7 +2741,7 @@ int LoadBlockIndex(bool fAllowNew)
     if (mapBlockIndex.empty())
     {
         if (!fAllowNew)
-            return false;
+            return true;
 
         // Genesis Block:
 //CBlock(hash=0000068e0b99f3db472b, ver=1, hashPrevBlock=00000000000000000000,
@@ -2751,7 +2751,7 @@ int LoadBlockIndex(bool fAllowNew)
 //    CTxOut(empty)
 //vMerkleTree: ea6fed5e2
         // Genesis block
-        const char* pszTimestamp = "Fair.Coop - The Earth Cooperative for a Fair Economy";
+        const char* pszTimestamp = "New times";
         CTransaction txNew;
         txNew.nTime = nChainStartTime;
         txNew.vin.resize(1);
@@ -2766,7 +2766,7 @@ int LoadBlockIndex(bool fAllowNew)
         block.nVersion = BLOCK_VERSION_DEFAULT | BLOCK_VERSION_GROESTL;
         block.nTime    = nChainStartTime + 15;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
-        block.nNonce   = fTestNet ? 280528 : 102078;
+        block.nNonce   = fTestNet ? 0 : 0;
 
 #if 0
         if (block.GetHash() != hashGenesisBlock) {
