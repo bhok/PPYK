@@ -50,7 +50,6 @@ unsigned int nStakeMaxAge = 60 * 60 * 24 * 90; // stake age of full weight (90 d
 unsigned int nStakeTargetSpacing = 10 * 60; // 10 minute block spacing
 unsigned int nProofOfWorkTargetSpacing = 5 * 60; // 5 minutes PoW block spacing
 
-CBitcoinAddress recoveryAddress("fRecovr5RiYKSh9hAJYR1jmTMapWMnBxRm");
 
 int64 nChainStartTime = 1389138959;
 int nCoinbaseMaturity = 5;
