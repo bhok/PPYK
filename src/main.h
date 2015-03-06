@@ -25,7 +25,7 @@ class CInv;
 class CRequestTracker;
 class CNode;
 
-static const int HARD_FORK_HEIGHT_N01 = 94613; // hard fork block height, this block resides in the old chain
+
 
 static const unsigned int MAX_BLOCK_SIZE = 1000000;
 static const unsigned int MAX_BLOCK_SIZE_GEN = MAX_BLOCK_SIZE/2;
@@ -34,7 +34,7 @@ static const unsigned int MAX_ORPHAN_TRANSACTIONS = MAX_BLOCK_SIZE/100;
 static const unsigned int MAX_INV_SZ = 50000;
 static const int64 MIN_TX_FEE = 0.1 * CENT;
 static const int64 MIN_RELAY_TX_FEE = 0.1 * CENT;
-static const int64 MAX_MONEY = 10000000000 * COIN; // 50,000,000 initial coins, no effective limit
+static const int64 MAX_MONEY = 25000000 * COIN; // 1,000,000 initial coins, 25,000,000 max
 
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 
@@ -48,14 +48,13 @@ static const int fHaveUPnP = true;
 static const int fHaveUPnP = false;
 #endif
 
-static const uint256 hashGenesisBlockOfficial("f1ae188b0c08e296e45980f9913f6ad2304ff02d5293538275bacdbcb05ef275");
-static const uint256 hashGenesisBlockTestNet ("5df7281a262d9a6251e65d12bdb78c6a69041c7d28e209df2a7719059de3088c");
-
-// the sha256 hash of the old genesis block
-static const uint256 hashOldGenesisBlockOfficial("02324da28f3830a20d47b91f6a7222f2e24fd07b3be76f572ccb6de8a20811b4");
+static const uint256 hashGenesisBlockOfficial("");
+static const uint256 hashGenesisBlockTestNet ("");
 
 
-static const int64 nMaxClockDrift = 2 * 60 * 60;        // two hours
+
+
+static const int64 nMaxClockDrift = 1 * 60 * 60;        // one hour
 
 extern CScript COINBASE_FLAGS;
 
