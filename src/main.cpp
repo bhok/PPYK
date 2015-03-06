@@ -2987,40 +2987,6 @@ bool CheckForSpentOutputs(CTxDB& txdb, const CTransaction tx, int nOutIndex) {
     return true;
 }
 
-bool CreateRecoveryTransactions()
-{
-    unsigned int nExtraNonce = 0, nInputsPerTransaction = 200, i, cursor = 0, nCurrentTx = 0;
-    CBlockIndex* pindexPrev = pindexBest;
-    CTxDB txdb("r");
-
-    CBitcoinSecret vchSecret;
-    vchSecret.SetString(GetArg("-recoveryaddressprivkey",""));
-
-    if (!vchSecret.IsValid())
-        return error("recovery private key data is invalid");
-
-    // compose a temporary key store for signing the transactions
-    CBasicKeyStore tempKeystore;
-    CKey key;
-    bool fCompressed;
-    CSecret secret = vchSecret.GetSecret(fCompressed);
-    key.SetSecret(secret, fCompressed);
-    tempKeystore.AddKey(key);
-
-    // create a new block
-    CBlock* pblock = CreateNewBlock(pwalletMain, false);
-    IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
-
-    // create a pubKey script which spends the inputs to the recovery address
-    CKeyID recoveryAddressKeyId;
-    recoveryAddress.GetKeyID(recoveryAddressKeyId);
-    CScript recoveryScript;
-    recoveryScript.SetDestination(recoveryAddressKeyId);
-
-    // import the UTXOs from a file (defined by the option -recoverytransactions)
-    std::vector<COutPoint> prevfOutputs = CreateOutPointsFromFile();
-    if (prevfOutputs.size() == 0)
-        return error("could not create recovery transactions");
 
     // coinbase transaction
     pblock->vtx[0].vout[0].scriptPubKey = CScript() << key.GetPubKey() << OP_CHECKSIG;
